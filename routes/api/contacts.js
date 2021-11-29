@@ -3,7 +3,8 @@ const contactsOperations = require('../../model/index')
 const router = express.Router()
 
 router.get('/', async (req, res, next) => {
-  const contacts = await contactsOperations.listContacts()
+  try {
+    const contacts = await contactsOperations.listContacts()
   res.json({
     status: 'success',
     code: 200,
@@ -11,11 +12,36 @@ router.get('/', async (req, res, next) => {
       result: contacts
     }
   })
-  next()
+  } catch (error) {
+    next(error)
+  }
 })
 
 router.get('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
+  try {
+    const { id } = req.params
+    const result = await contactsOperations.getContactById(id)
+    if (!result) {
+      const error = new Error("Not found")
+      error.status = 404
+      throw error
+      // res.status(404).json({
+      // status: "error",
+      // code: 404,
+      // message: "Not found"
+      // })
+      // return
+    }
+    res.json({
+      status: "success",
+      code: 200,
+      data: {
+        result
+      }
+     })
+  } catch (error) {
+    next(error)
+  }
 })
 
 router.post('/', async (req, res, next) => {
