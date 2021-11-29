@@ -2,7 +2,7 @@
 const contacts = require('./contacts.json');
 
 const listContacts = async () => {
-  return contacts
+  // await const result = contacts;
 }
 
 const getContactById = async (contactId) => {}

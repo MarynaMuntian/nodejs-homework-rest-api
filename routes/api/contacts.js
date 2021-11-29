@@ -2,14 +2,15 @@ const express = require('express')
 const { listContacts } = require('../../model')
 const router = express.Router()
 
-router.get('/api/contacts', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   res.json({
     status: 'success',
     code: 200,
     data: {
       result: listContacts()
     }
-  })
+  });
+  next()
 })
 
 router.get('/:contactId', async (req, res, next) => {
