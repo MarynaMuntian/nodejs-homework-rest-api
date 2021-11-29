@@ -1,16 +1,16 @@
 const express = require('express')
-const contactsOperations = require('../../model')
+const contactsOperations = require('../../model/index')
 const router = express.Router()
 
 router.get('/', async (req, res, next) => {
-  const contacts = await contactsOperations.listContacts();
+  const contacts = await contactsOperations.listContacts()
   res.json({
     status: 'success',
     code: 200,
     data: {
       result: contacts
     }
-  });
+  })
   next()
 })
 
