@@ -32,12 +32,6 @@ router.get('/:contactId', async (req, res, next) => {
       const error = new Error("Not found")
       error.status = 404
       throw error
-      // res.status(404).json({
-      // status: "error",
-      // code: 404,
-      // message: "Not found"
-      // })
-      // return
     }
     res.json({
       status: "success",
@@ -74,8 +68,8 @@ router.post('/', async (req, res, next) => {
 
 router.delete('/:contactId', async (req, res, next) => {
   try {
-    const { id } = req.params
-    const result = await contactsOperations.removeContact(id)
+    const { contactId } = req.params
+    const result = await contactsOperations.removeContact(contactId)
     if (!result) {
       const error = new Error("Not found")
       error.status = 404
@@ -102,8 +96,8 @@ router.put('/:contactId', async (req, res, next) => {
       error.message = 'missing required field'
       throw error
     }
-    const { id } = req.params
-    const result = await contactsOperations.updateContact(id, req.body)
+    const { contactId } = req.params
+    const result = await contactsOperations.updateContact(contactId, req.body)
     if (!result) {
       const error = new Error("Not found")
       error.status = 404
