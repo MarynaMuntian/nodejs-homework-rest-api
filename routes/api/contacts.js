@@ -76,8 +76,27 @@ router.delete('/:contactId', async (req, res, next) => {
   res.json({ message: 'template message' })
 })
 
-router.patch('/:contactId', async (req, res, next) => {
-  res.json({ message: 'template message' })
+router.put('/:contactId', async (req, res, next) => {
+  try {
+    const { error } = contactSchema.validate(req.body)
+    if (error) {
+      error.status = 400;
+      error.message = 'missing required field'
+      throw error
+    }
+    const { id } = req.params
+    const result = await contactsOperations.updateContact(id, req.body)
+    res.json({
+      status: "success",
+      code: 200,
+      data: {
+        result
+      }
+     })
+  } catch (error) {
+    next(error)
+  }
+  
 })
 
 module.exports = router

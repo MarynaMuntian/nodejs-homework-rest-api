@@ -26,7 +26,7 @@ const removeContact = async (contactId) => {}
 
 const addContact = async(name, email, phone) => {
   const contacts = await listContacts();
-  const newContact = { name, email, phone, id: v4() };
+  const newContact = { id: v4(), name, email, phone };
 
 // if (!name || !email || !phone) {
 //   return `All fields are required!`
@@ -37,7 +37,16 @@ const addContact = async(name, email, phone) => {
   return newContact;
 }
 
-const updateContact = async (contactId, body) => {}
+const updateContact = async (contactId, body) => {
+const contacts = await listContacts();
+    const idx = contacts.findIndex(contact => contact.id === parseInt(contactId));
+    if(idx === -1){
+        return null;
+    }
+    contacts[idx] = {...body, contactId};
+    await fs.writeFile(contactsPath, JSON.stringify(contacts))
+    return contacts[idx];
+}
 
 module.exports = {
   listContacts,
