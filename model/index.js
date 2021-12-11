@@ -12,7 +12,7 @@ const listContacts = async () => {
 
 const getContactById = async (contactId) => {
   const contacts = await listContacts()
-  const result = contacts.find(contact => contact.id === parseInt(contactId))
+  const result = contacts.find(contact => String(contact.id) === String(contactId))
   if (!result) {
     return null
   }
@@ -21,7 +21,7 @@ const getContactById = async (contactId) => {
 
 const removeContact = async (contactId) => {
   const contacts = await listContacts()
-  const idx = contacts.findIndex(contact => contact.id === parseInt(contactId))
+  const idx = contacts.findIndex(contact => String(contact.id) === String(contactId))
   if (idx === -1) {
     return null
   }
@@ -41,7 +41,7 @@ const addContact = async(body) => {
 
 const updateContact = async (contactId, body) => {
   const contacts = await listContacts()
-  const idx = contacts.findIndex(contact => contact.id === parseInt(contactId))
+  const idx = contacts.findIndex(contact => String(contact.id) === String(contactId))
   if (idx === -1) {
     return null
   }
